@@ -31,6 +31,22 @@ jobs:
           script: "rclone sync --checksum --stats-log-level=NOTICE google-drive: backup/google-drive"
           # Stop the script after the first failure.
           script_stop: # optional
-          # Environment variables to be passed to the shell script.
-          envs: # optional
 
+  restic:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Restic
+        uses: appleboy/ssh-action@v1.0.3
+        env:
+          B2_ACCOUNT_ID: ${{secrets.B2_ACCOUNT_ID}}
+          B2_ACCOUNT_KEY: ${{secrets.B2_ACCOUNT_KEY}}
+          RESTIC_PASSWORD: ${{secrets.RESTIC_PASSWORD}}
+        with:
+          host: ${{secrets.RSYNC_HOST}}
+          command_timeout: # optional, default is 10m
+          username: ${{secrets.RSYNC_USERNAME}}
+          key: ${{secrets.RSYNC_KEY}}
+          script: "restic -r b2:${{secrets.B2_BUCKET}}:restic-backup --verbose backup backup"
+          # Stop the script after the first failure.
+          script_stop: # optional
+          envs: B2_ACCOUNT_ID,B2_ACCOUNT_KEY,RESTIC_PASSWORD

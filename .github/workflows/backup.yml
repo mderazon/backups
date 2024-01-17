@@ -18,15 +18,10 @@ jobs:
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{secrets.RSYNC_HOST}}
-          # Timeout duration for SSH commands execution.
           command_timeout: # optional, default is 10m
           username: ${{secrets.RSYNC_USERNAME}}
-          # Content of the SSH private key. For example, the raw content of ~/.ssh/id_rsa.
           key: ${{secrets.RSYNC_KEY}}
-          # SHA256 fingerprint of the host public key.
-          fingerprint: # optional
-          # Commands to be executed.
-          script: rclone -v
+          script: rclone sync --checksum --stats-log-level=NOTICE dropbox: backup/dropbox
           # Stop the script after the first failure.
           script_stop: # optional
           # Environment variables to be passed to the shell script.

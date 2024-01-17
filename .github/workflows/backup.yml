@@ -1,0 +1,33 @@
+name: rclone-restic-backup
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Dropbox
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.RSYNC_HOST }}
+          # Timeout duration for SSH commands execution.
+          command_timeout: # optional, default is 10m
+          # Content of the SSH private key. For example, the raw content of ~/.ssh/id_rsa.
+          key: ${{ secrets.RSYNC_KEY }}
+          # SHA256 fingerprint of the host public key.
+          fingerprint: # optional
+          # Commands to be executed.
+          script: rclone -v
+          # Stop the script after the first failure.
+          script_stop: # optional
+          # Environment variables to be passed to the shell script.
+          envs: # optional
+

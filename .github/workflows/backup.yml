@@ -17,11 +17,12 @@ jobs:
       - name: Dropbox
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.RSYNC_HOST }}
+          host: ${{secrets.RSYNC_HOST}}
           # Timeout duration for SSH commands execution.
           command_timeout: # optional, default is 10m
+          username: ${{secrets.RSYNC_USERNAME}}
           # Content of the SSH private key. For example, the raw content of ~/.ssh/id_rsa.
-          key: ${{ secrets.RSYNC_KEY }}
+          key: ${{secrets.RSYNC_KEY}}
           # SHA256 fingerprint of the host public key.
           fingerprint: # optional
           # Commands to be executed.

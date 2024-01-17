@@ -21,7 +21,7 @@ jobs:
           command_timeout: # optional, default is 10m
           username: ${{secrets.RSYNC_USERNAME}}
           key: ${{secrets.RSYNC_KEY}}
-          script: rclone sync --checksum --stats-log-level=NOTICE dropbox: backup/dropbox
+          script: "rclone sync --checksum --stats-log-level=NOTICE dropbox: backup/dropbox"
           # Stop the script after the first failure.
           script_stop: # optional
           # Environment variables to be passed to the shell script.

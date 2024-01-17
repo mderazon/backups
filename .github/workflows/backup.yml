@@ -27,3 +27,16 @@ jobs:
           # Environment variables to be passed to the shell script.
           envs: # optional
 
+      - name: Google Drive
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{secrets.RSYNC_HOST}}
+          command_timeout: # optional, default is 10m
+          username: ${{secrets.RSYNC_USERNAME}}
+          key: ${{secrets.RSYNC_KEY}}
+          script: "rclone sync --checksum --stats-log-level=NOTICE google-drive: backup/google-drive"
+          # Stop the script after the first failure.
+          script_stop: # optional
+          # Environment variables to be passed to the shell script.
+          envs: # optional
+

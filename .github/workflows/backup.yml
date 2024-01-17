@@ -14,7 +14,7 @@ jobs:
           host: ${{secrets.RSYNC_HOST}}
           command_timeout: # optional, default is 10m
           username: ${{secrets.RSYNC_USERNAME}}
-          key: ${{secrets.RSYNC_KEY}}
+          key: ${{secrets.RSYNC_KEY}} # ssh key for connecting to rsync.net
           script: "rclone sync --checksum --stats-log-level=NOTICE dropbox: backup/dropbox"
           # Stop the script after the first failure.
           script_stop: # optional
